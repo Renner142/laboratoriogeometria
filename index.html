@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Laboratório de Wescley</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;600;800&display=swap">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <aside id="side">
+    <div class="brand"><h1>Laboratório de Geometria</h1><button id="helpBtn" title="Como usar (H)">?</button></div>
+
+    <details open><summary>Figuras</summary>
+      <div class="row"><select id="shapeSel"></select><button id="addBtn">Adicionar</button></div>
+      <ul id="figList"></ul>
+    </details>
+    <details open><summary>Figura selecionada</summary><div id="params"></div></details>
+    <details open><summary>Informações</summary>
+      <div id="infoChk" class="chk"></div>
+      <dl id="infoOut"></dl>
+    </details>
+    <details><summary>Visualização</summary><div id="views" class="chk"></div></details>
+    <details><summary>Projeto</summary>
+      <div class="btns">
+        <button id="saveBtn">Salvar arquivo</button>
+        <button id="openBtn">Abrir arquivo</button>
+        <button id="clearBtn" class="danger">Limpar tudo</button>
+      </div>
+      <p class="mute">O projeto também é salvo sozinho neste navegador.</p>
+    </details>
+  </aside>
+
+  <main id="stage">
+    <div id="labels"></div>
+    <div id="tools"></div>
+    <div id="camBar">
+      <button data-cam="iso" title="Vista isométrica">Iso</button>
+      <button data-cam="frente" title="Vista de frente">Frente</button>
+      <button data-cam="topo" title="Vista de cima">Topo</button>
+      <button data-cam="lado" title="Vista de lado">Lado</button>
+    </div>
+    <div id="corner">
+      <button id="undo" title="Desfazer (Ctrl+Z)">↶</button>
+      <button id="redo" title="Refazer (Ctrl+Y)">↷</button>
+      <button id="focus" title="Focar na figura (F)">◎</button>
+      <button id="home" title="Vista inicial (R)">⌂</button>
+    </div>
+    <div id="empty" hidden><b>Espaço vazio</b><span>Escolha uma figura ao lado e clique em Adicionar.</span></div>
+    <p id="nav"></p>
+    <p id="hint"></p>
+    <div id="toast"></div>
+  </main>
+
+  <div id="help" hidden>
+    <div class="card">
+      <h2>Como usar</h2>
+      <div class="cols">
+        <div>
+          <h3>1. Criar</h3>
+          <p>Escolha uma figura em <b>Figuras</b> e clique em <b>Adicionar</b>. Todas ficam no mesmo espaço, planas e sólidas juntas.</p>
+          <h3>2. Navegar</h3>
+          <p><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> andam, <kbd>E</kbd> sobe, <kbd>Q</kbd> desce, <kbd>Shift</kbd> corre. Arraste no vazio para olhar ao redor. O scroll avança e recua. Os botões <b>Iso, Frente, Topo e Lado</b> posicionam a câmera.</p>
+          <h3>3. Mover</h3>
+          <p>Com <b>Mover</b>, clique na figura. Aparecem 3 setas: <b style="color:#e5484d">vermelha = X</b>, <b style="color:#30a46c">verde = Y (altura)</b>, <b style="color:#3e63dd">azul = Z</b>. Arraste a seta do eixo que quiser.</p>
+          <h3>4. Girar</h3>
+          <p>Com <b>Girar</b>, clique na figura e arraste um anel: cada cor gira em torno do seu eixo. Para deitar um prisma em pé, use o botão <b>↻ Z 90°</b> no painel. Também dá para digitar os ângulos.</p>
+        </div>
+        <div>
+          <h3>5. Editar</h3>
+          <p><b>Vértice</b>: clique num ponto e arraste as setas. <b>Aresta</b>: clique em 2 vértices. <b>Face</b>: clique nos vértices em ordem e aperte <kbd>Enter</kbd>. <b>Ponto</b>: clique no chão. Em figuras planas, o botão <b>Extrudar</b> cria um prisma.</p>
+          <h3>6. Ver medidas</h3>
+          <p><kbd>N</kbd> mostra os nomes dos vértices, <kbd>M</kbd> mostra o comprimento das arestas, <kbd>G</kbd> liga/desliga a grade.</p>
+          <h3>Atalhos</h3>
+          <p><kbd>1</kbd>–<kbd>6</kbd> ferramentas · <kbd>F</kbd> focar · <kbd>R</kbd> início · <kbd>Del</kbd> excluir · <kbd>Ctrl</kbd>+<kbd>Z</kbd>/<kbd>Y</kbd> desfazer/refazer · <kbd>Ctrl</kbd>+<kbd>D</kbd> duplicar · <kbd>Ctrl</kbd>+<kbd>S</kbd> salvar · duplo clique foca na figura</p>
+        </div>
+      </div>
+      <button data-close>Entendi, vamos lá</button>
+    </div>
+  </div>
+  <input type="file" id="fileIn" accept=".json,application/json" hidden>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="js/shapes.js"></script>
+  <script src="js/measures.js"></script>
+  <script src="js/state.js"></script>
+  <script src="js/scene.js"></script>
+  <script src="js/project.js"></script>
+  <script src="js/input.js"></script>
+  <script src="js/ui.js"></script>
+</body>
+</html>
